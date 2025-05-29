@@ -118,7 +118,9 @@ CREATE TABLE checklist (
             'Completed'
         )
     ),
-    completion_percentage REAL CHECK (completion_percentage >= 0.0 AND completion_percentage <= 100.0)
+    completion_percentage REAL CHECK (
+        completion_percentage >= 0.0 AND completion_percentage <= 100.0
+    )
 );
 
 /* Таблиця safety_rule */
@@ -127,7 +129,13 @@ CREATE TABLE safety_rule (
     checklist_id INTEGER NOT NULL REFERENCES checklist (checklist_id),
     rule_name VARCHAR(100) NOT NULL,
     description VARCHAR(1000) NOT NULL,
-    category VARCHAR(20) NOT NULL CHECK (category IN ('PPE', 'Behavior', 'Equipment')),
+    category VARCHAR(20) NOT NULL CHECK (
+        category IN (
+            'PPE',
+            'Behavior',
+            'Equipment'
+        )
+    ),
     mandatory BOOLEAN NOT NULL
 );
 
