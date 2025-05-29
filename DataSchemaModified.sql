@@ -21,7 +21,7 @@ CREATE TABLE user (
 );
 
 /* Таблиця Sleep */
-CREATE TABLE sleeep (
+CREATE TABLE "sleep" (
     sleep_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES user(user_id),
     sleep_date DATE NOT NULL CHECK (sleep_date <= CURRENT_DATE),
@@ -35,7 +35,7 @@ CREATE TABLE sleeep (
 /* Таблиця SleepPhase */
 CREATE TABLE sleep_phase (
     phase_id SERIAL PRIMARY KEY,
-    sleep_id INTEGER NOT NULL REFERENCES sleeep(sleep_id),
+    sleep_id INTEGER NOT NULL REFERENCES "sleep"(sleep_id),
     phase_name VARCHAR(20) NOT NULL CHECK (phase_name IN ('Light Sleep', 'Deep Sleep', 'REM Sleep')),
     phase_start TIME NOT NULL,
     phase_end TIME NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE recommendation (
 /* Таблиця WakeUpAlarm */
 CREATE TABLE wake_up_alarm (
     alarm_id SERIAL PRIMARY KEY,
-    sleep_id INTEGER NOT NULL REFERENCES sleeep(sleep_id),
+    sleep_id INTEGER NOT NULL REFERENCES "sleep"(sleep_id),
     alarm_time TIME NOT NULL,
     alarm_type VARCHAR(20) NOT NULL CHECK (alarm_type IN ('Melody', 'Vibration', 'Light')),
     volume INTEGER CHECK (volume >= 1 AND volume <= 100),
