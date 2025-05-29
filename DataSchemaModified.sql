@@ -77,7 +77,13 @@ CREATE TABLE wake_up_alarm (
     alarm_id SERIAL PRIMARY KEY,
     sleep_id INTEGER NOT NULL REFERENCES sleep (sleep_id),
     alarm_time TIME NOT NULL,
-    alarm_type VARCHAR(20) NOT NULL CHECK (alarm_type IN ('Melody', 'Vibration', 'Light')),
+    alarm_type VARCHAR(20) NOT NULL CHECK (
+        alarm_type IN (
+            'Melody',
+            'Vibration',
+            'Light'
+        )
+    ),
     volume INTEGER CHECK (volume >= 1 AND volume <= 100),
     duration INTERVAL NOT NULL
 );
@@ -90,7 +96,13 @@ CREATE TABLE workplace (
     name VARCHAR(100) NOT NULL,
     qr_code VARCHAR(255) UNIQUE NOT NULL,
     address VARCHAR(200),
-    work_type VARCHAR(20) NOT NULL CHECK (work_type IN ('Office', 'Industrial', 'Laboratory'))
+    work_type VARCHAR(20) NOT NULL CHECK (
+        work_type IN (
+            'Office',
+            'Industrial',
+            'Laboratory'
+        )
+    )
 );
 
 /* Таблиця checklist */
@@ -99,7 +111,13 @@ CREATE TABLE checklist (
     workplace_id INTEGER NOT NULL REFERENCES workplace (workplace_id),
     checklist_name VARCHAR(100) NOT NULL,
     creation_date DATE DEFAULT CURRENT_DATE,
-    completion_status VARCHAR(20) CHECK (completion_status IN ('Not Started', 'In Progress', 'Completed')),
+    completion_status VARCHAR(20) CHECK (
+        completion_status IN (
+            'Not Started',
+            'In Progress',
+            'Completed'
+        )
+    ),
     completion_percentage REAL CHECK (completion_percentage >= 0.0 AND completion_percentage <= 100.0)
 );
 
@@ -118,9 +136,22 @@ CREATE TABLE protective_equipment (
     equipment_id SERIAL PRIMARY KEY,
     workplace_id INTEGER NOT NULL REFERENCES workplace (workplace_id),
     equipment_name VARCHAR(100) NOT NULL,
-    type VARCHAR(20) NOT NULL CHECK (type IN ('Helmet', 'Glasses', 'Gloves', 'Respirator')),
+    type VARCHAR(20) NOT NULL CHECK (
+        type IN (
+            'Helmet',
+            'Glasses',
+            'Gloves',
+            'Respirator'
+        )
+    ),
     size VARCHAR(10),
-    usage_status VARCHAR(20) NOT NULL CHECK (usage_status IN ('New', 'In Use', 'Needs Replacement')),
+    usage_status VARCHAR(20) NOT NULL CHECK (
+        usage_status IN (
+            'New',
+            'In Use',
+            'Needs Replacement'
+        )
+    ),
     expiration_date DATE NOT NULL CHECK (expiration_date >= CURRENT_DATE)
 );
 
@@ -129,7 +160,13 @@ CREATE TABLE notification (
     notification_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES app_user (user_id),
     message_text VARCHAR(500) NOT NULL,
-    notification_type VARCHAR(20) CHECK (notification_type IN ('Warning', 'Error', 'Information')),
+    notification_type VARCHAR(20) CHECK (
+        notification_type IN (
+            'Warning',
+            'Error',
+            'Information'
+        )
+    ),
     send_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(20) CHECK (status IN ('Sent', 'Read', 'Processed'))
 );
@@ -141,6 +178,18 @@ CREATE TABLE risk_removal_instruction (
     equipment_id INTEGER REFERENCES protective_equipment (equipment_id),
     instruction_text VARCHAR(1000) NOT NULL,
     steps TEXT NOT NULL,
-    urgency VARCHAR(20) CHECK (urgency IN ('Immediate', 'Within Hour', 'Within Day')),
-    execution_status VARCHAR(20) CHECK (execution_status IN ('Not Started', 'In Progress', 'Completed'))
+    urgency VARCHAR(20) CHECK (
+        urgency IN (
+            'Immediate',
+            'Within Hour',
+            'Within Day'
+        )
+    ),
+    execution_status VARCHAR(20) CHECK (
+        execution_status IN (
+            'Not Started',
+            'In Progress',
+            'Completed'
+        )
+    )
 );
