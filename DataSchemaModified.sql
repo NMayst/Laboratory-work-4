@@ -28,7 +28,7 @@ CREATE TABLE sleeep (
     bed_time TIME NOT NULL,
     desired_wake_time TIME NOT NULL,
     actual_wake_time TIME NOT NULL,
-    sleep_duration INTERVAL HOUR TO MINUTE CHECK (sleep_duratio >= INTERVAL '1 hour' AND sleep_duratio <= INTERVAL '24 hours'),
+    sleep_duration INTERVAL HOUR TO MINUTE CHECK (sleep_duration >= INTERVAL '1 hour' AND sleep_duration <= INTERVAL '24 hours'),
     sleep_quality FLOAT CHECK (sleep_quality >= 0.0 AND sleep_quality <= 10.0)
 );
 
