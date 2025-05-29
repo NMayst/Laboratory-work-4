@@ -1,4 +1,3 @@
-
 /* Видалення таблиць з урахуванням зовнішніх ключів */
 DROP TABLE IF EXISTS RiskRemovalInstruction CASCADE;
 DROP TABLE IF EXISTS Notification CASCADE;
