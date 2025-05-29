@@ -35,8 +35,13 @@ CREATE TABLE sleep (
 CREATE TABLE sleep_phase (
     phase_id SERIAL PRIMARY KEY,
     sleep_id INTEGER NOT NULL REFERENCES sleep (sleep_id),
-    phase_name VARCHAR(20) NOT NULL CHECK (phase_name
-    IN ('Light Sleep', 'Deep Sleep', 'REM Sleep')),
+    phase_name VARCHAR(20) NOT NULL CHECK (
+            phase_name IN (
+                'Light Sleep',
+                'Deep Sleep',
+                'REM Sleep'
+            )
+        ),
     phase_start TIME NOT NULL,
     phase_end TIME NOT NULL,
     phase_duration INTERVAL NOT NULL,
