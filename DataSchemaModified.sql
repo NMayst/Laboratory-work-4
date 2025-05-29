@@ -36,24 +36,38 @@ CREATE TABLE sleep_phase (
     phase_id SERIAL PRIMARY KEY,
     sleep_id INTEGER NOT NULL REFERENCES sleep (sleep_id),
     phase_name VARCHAR(20) NOT NULL CHECK (
-            phase_name IN (
-                'Light Sleep',
-                'Deep Sleep',
-                'REM Sleep'
-            )
-        ),
+        phase_name IN (
+            'Light Sleep',
+            'Deep Sleep',
+            'REM Sleep'
+        )
+    ),
     phase_start TIME NOT NULL,
     phase_end TIME NOT NULL,
     phase_duration INTERVAL NOT NULL,
-    sleep_depth VARCHAR(10) NOT NULL CHECK (sleep_depth IN ('Shallow', 'Medium', 'Deep'))
+    sleep_depth VARCHAR(10) NOT NULL CHECK (
+        sleep_depth IN (
+            'Shallow',
+            'Medium',
+            'Deep'
+        )
+    )
 );
 
 /* Таблиця recommendation */
 CREATE TABLE recommendation (
     recommendation_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES app_user (user_id),
-    recommendation_text VARCHAR(500) NOT NULL CHECK (recommendation_text ~ '^[A-Za-zА-Яа-я0-9,.\-\s]{1,500}$'),
-    category VARCHAR(30) NOT NULL CHECK (category IN ('Schedule', 'Nutrition', 'Physical Activity')),
+    recommendation_text VARCHAR(500) NOT NULL CHECK (
+        recommendation_text ~ '^[A-Za-zА-Яа-я0-9,.\-\s]{1,500}$'
+    ),
+    category VARCHAR(30) NOT NULL CHECK (
+        category IN (
+            'Schedule',
+            'Nutrition',
+            'Physical Activity'
+        )
+    ),
     priority VARCHAR(10) NOT NULL CHECK (priority IN ('Low', 'Medium', 'High')),
     creation_date DATE DEFAULT CURRENT_DATE
 );
